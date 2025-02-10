@@ -1,5 +1,7 @@
 # DCA Buy & Sell Calculator
 
+![Buy screenshot](images/buy_screenshot.jpg)
+![Sell screenshot](images/sell_screenshot.jpg)
 ## Overview
 This project provides two calculators for Dollar-Cost Averaging (DCA) investments in bitcoin using historical (10 years or less) price data:
 - **DCA Buy Calculator**: Calculates bitcoin purchases over time based on user-defined parameters.
