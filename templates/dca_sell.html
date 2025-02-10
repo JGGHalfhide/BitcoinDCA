@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DCA Sell Calculator</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: orange;
+        }
+        form {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input, select {
+            background-color: #333;
+            color: white;
+        }
+        button {
+            background-color: orange;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkorange;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: orange;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: darkorange;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid orange;
+        }
+        th {
+            background-color: darkorange;
+        }
+    </style>
+</head>
+<body>
+    <h1>DCA Sell Calculator</h1>
+    <form method="post">
+        Start Date: <input type="date" name="start_date" required><br>
+        End Date: <input type="date" name="end_date" required><br>
+        Starting BTC Amount: <input type="number" step="0.000001" name="btc_amount" required><br>
+        Withdrawal Amount ($): <input type="number" step="0.01" name="withdrawal_amount" required><br>
+        Withdrawal Frequency:
+        <select name="withdrawal_frequency">
+            <option>Daily</option>
+            <option>Weekly</option>
+            <option>Biweekly</option>
+            <option>Monthly</option>
+        </select><br>
+
+        <button type="submit">Calculate Withdrawals</button>
+        <a href="/" class="back-button">Back</a>
+    </form>
+
+    {% if sell_transactions %}
+    <h2>Results:</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Total BTC Sold</th>
+            <th>Total USD Received</th>
+            <th>Total BTC Remaining</th>
+        </tr>
+        {% for s in sell_transactions %}
+        <tr>
+            <td>{{ s.date }}</td>
+            <td>{{ s.btc_sold }}</td>
+            <td>{{ s.usd_received }}</td>
+            <td>{{ s.btc_remaining }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No sell transactions calculated yet.</p>
+    {% endif %}
+</body>
+</html>
