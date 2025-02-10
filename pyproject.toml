@@ -1,0 +1,11 @@
+[project]
+name = "repl-nix-workspace"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "matplotlib>=3.10.0",
+    "requests>=2.32.3",
+    "tkcalendar>=1.6.1",
+    "yfinance>=0.2.52",
+]
