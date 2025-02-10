@@ -1,7 +1,5 @@
 # DCA Buy & Sell Calculator
 
-![Buy screenshot](images/buy_screenshot.jpg)
-![Sell screenshot](images/sell_screenshot.jpg)
 ## Overview
 This project provides two calculators for Dollar-Cost Averaging (DCA) investments in bitcoin using historical (10 years or less) price data:
 - **DCA Buy Calculator**: Calculates bitcoin purchases over time based on user-defined parameters.
@@ -47,13 +45,15 @@ This project provides two calculators for Dollar-Cost Averaging (DCA) investment
    - Specify the investment amount per period.
    - Choose the purchase frequency (daily, weekly, biweekly, or monthly).
    - Click "Calculate Purchases" to view the results.
-
+![Buy screenshot](images/buy_screenshot.jpg)
+   
 2. **DCA Sell Calculator:**
    - Enter the start and end dates.
    - Enter the starting BTC balance. 
    - Enter the USD value of BTC sales.
    - Select the sale frequency.
    - Click "Calculate Sales" to get FIFO-based breakdowns.
+![Sell screenshot](images/sell_screenshot.jpg)
 
 ## Future Improvements
 - Integration of **real-time BTC price ticker**.
