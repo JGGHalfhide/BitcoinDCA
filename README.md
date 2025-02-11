@@ -1,4 +1,5 @@
 # DCA Buy & Sell Calculator
+Visit the live website at <https://BitcoinDCA.onrender.com>. Please note, render's free hosting tier disables the site when not accessed for 15 or more minutes. Therefore, if your request times out, please simply refresh the page and allow it to load.
 
 ![Home screenshot](static/images/home_screenshot.jpg)
 
