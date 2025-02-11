@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Bitcoin DCA Calculator</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/bitcoin_logo.jpg') }}">
     <style>
         body {
             background-color: black;
@@ -11,6 +12,12 @@
         }
         h1 {
             color: orange;
+        }
+        #bitcoin-ticker {
+            font-size: 20px;
+            font-weight: bold;
+            color: limegreen;
+            margin: 10px 0;
         }
         a {
             color: white;
@@ -26,10 +33,30 @@
             background-color: darkorange;
         }
     </style>
+    <script>
+        async function fetchBitcoinPrice() {
+            try {
+                let response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
+                let data = await response.json();
+                let price = data.bitcoin.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                document.getElementById("bitcoin-ticker").innerText = "Current BTC Price: " + price;
+            } catch (error) {
+                document.getElementById("bitcoin-ticker").innerText = "Failed to load BTC price";
+            }
+        }
+        setInterval(fetchBitcoinPrice, 10000); // Refresh every 10 seconds
+        window.onload = fetchBitcoinPrice; // Load on page load
+    </script>
 </head>
 <body>
     <h1>Bitcoin DCA Calculator</h1>
+    <div id="bitcoin-ticker">Loading BTC price...</div>
+
     <a href="/dca-buy">DCA Buy Calculator</a>
     <a href="/dca-sell">DCA Sell Calculator</a>
+
+    <br>
+    <img src="{{ url_for('static', filename='images/bitcoin_logo.jpg') }}" alt="Bitcoin Logo" width="150">
 </body>
 </html>
+

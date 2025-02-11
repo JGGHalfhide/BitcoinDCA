@@ -83,7 +83,7 @@ def dca_sell():
             sell_transactions.append({
                 "date": current_date.strftime("%Y-%m-%d"),
                 "btc_sold": round(total_btc_sold, 6),  # Running total
-                "usd_withdrawn": round(total_usd_withdrawn, 2),  # Running total
+                "usd_received": round(total_usd_withdrawn, 2),  # Running total
                 "btc_remaining": round(btc_remaining, 6)
             })
 

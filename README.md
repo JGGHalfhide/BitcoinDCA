@@ -45,7 +45,7 @@ This project provides two calculators for Dollar-Cost Averaging (DCA) investment
    - Specify the investment amount per period.
    - Choose the purchase frequency (daily, weekly, biweekly, or monthly).
    - Click "Calculate Purchases" to view the results.
-![Buy screenshot](images/buy_screenshot.jpg)
+![Buy screenshot](static/images/buy_screenshot.jpg)
    
 2. **DCA Sell Calculator:**
    - Enter the start and end dates.
@@ -53,7 +53,7 @@ This project provides two calculators for Dollar-Cost Averaging (DCA) investment
    - Enter the USD value of BTC sales.
    - Select the sale frequency.
    - Click "Calculate Sales" to get FIFO-based breakdowns.
-![Sell screenshot](images/sell_screenshot.jpg)
+![Sell screenshot](static/images/sell_screenshot.jpg)
 
 ## Future Improvements
 - Integration of **real-time BTC price ticker**.
