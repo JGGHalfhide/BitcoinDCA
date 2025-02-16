@@ -1,15 +1,43 @@
 from flask import Flask, render_template, request
 from datetime import datetime, timedelta
 import yfinance as yf
-import pandas as pd
+import sqlite3
 
 app = Flask(__name__)
+
+
+# connect and initialize sqlite3 db for visitor counter
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def initialize_db():
+    conn = get_db_connection()
+    conn.execute('''CREATE TABLE IF NOT EXISTS visitor_counter (
+id INTEGER PRIMARY KEY,
+count INTEGER NOT NULL)''')
+    conn.execute('INSERT OR IGNORE INTO visitor_counter (id, count) VALUES (1, 0)')
+    conn.commit()
+    conn.close()
+
+
+def increment_visitor_count():
+    conn = get_db_connection()
+    conn.execute('UPDATE visitor_counter SET count = count + 1 WHERE id = 1')
+    conn.commit()
+    count = conn.execute('SELECT count FROM visitor_counter WHERE id = 1').fetchone()['count']
+    conn.close()
+    return count
+
 
 # Function to fetch historical Bitcoin prices
 def get_btc_price(date):
     btc = yf.Ticker("BTC-USD")
     hist = btc.history(start=date.strftime('%Y-%m-%d'), end=(date + timedelta(days=1)).strftime('%Y-%m-%d'))
     return hist['Close'].iloc[0] if not hist.empty and 'Close' in hist.columns else None
+
 
 # DCA Buy Calculator Route
 @app.route('/dca-buy', methods=['GET', 'POST'])
@@ -46,6 +74,7 @@ def dca_buy():
 
     return render_template("dca_buy.html", purchases=None)
 
+
 # DCA Sell Calculator Route
 @app.route('/dca-sell', methods=['GET', 'POST'])
 def dca_sell():
@@ -78,13 +107,14 @@ def dca_sell():
             total_btc_sold += btc_sold
             total_usd_withdrawn += usd_received
 
-            print(f"Date: {current_date.strftime('%Y-%m-%d')}, BTC Sold: {btc_sold}, Total USD Withdrawn: {usd_received}, BTC Remaining: {btc_remaining}, Total USD Withdrawn: {total_usd_withdrawn}")
+            print(
+                f"Date: {current_date.strftime('%Y-%m-%d')}, BTC Sold: {btc_sold}, Total USD Withdrawn: {usd_received}, BTC Remaining: {btc_remaining}, Total USD Withdrawn: {total_usd_withdrawn}")
 
             sell_transactions.append({
                 "date": current_date.strftime("%Y-%m-%d"),
                 "btc_sold": round(total_btc_sold, 6),  # Running total
                 "usd_received": round(total_usd_withdrawn, 2),  # Running total
-                "btc_remaining": round(btc_remaining, 8) # Running total
+                "btc_remaining": round(btc_remaining, 8)  # Running total
             })
 
             # Stop if all BTC has been sold
@@ -104,11 +134,14 @@ def dca_sell():
     return render_template("dca_sell.html", sell_transactions=sell_transactions)
 
 
-
 # Home Page Route
 @app.route('/')
 def home():
-    return render_template("home.html")
+    count = increment_visitor_count()
+
+    return render_template("home.html", visitor_count=count)
+
 
 if __name__ == '__main__':
+    initialize_db()  # Ensure database is set up before the app starts
     app.run(debug=True)
