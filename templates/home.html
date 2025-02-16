@@ -33,6 +33,20 @@
             background-color: darkorange;
         }
     </style>
+    <script>
+        async function fetchBitcoinPrice() {
+            try {
+                let response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
+                let data = await response.json();
+                let price = data.bitcoin.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                document.getElementById("bitcoin-ticker").innerText = "Current BTC Price: " + price;
+            } catch (error) {
+                document.getElementById("bitcoin-ticker").innerText = "Failed to load BTC price";
+            }
+        }
+        setInterval(fetchBitcoinPrice, 10000); // Refresh every 10 seconds
+        window.onload = fetchBitcoinPrice; // Load on page load
+    </script>
 </head>
 <body>
     <h1>Bitcoin DCA Calculator</h1>
